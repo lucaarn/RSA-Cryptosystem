@@ -2,5 +2,8 @@ module Main (main) where
 
 import Lib
 
-main :: IO ()
-main = someFunc
+p = 7
+q = 11
+N = p * q
+
+e = 65537
