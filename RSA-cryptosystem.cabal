@@ -1,67 +1,17 @@
 cabal-version: 2.2
 
--- This file has been generated from package.yaml by hpack version 0.35.2.
---
--- see: https://github.com/sol/hpack
-
 name:           RSA-cryptosystem
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/RSA-cryptosystem#readme>
-homepage:       https://github.com/githubuser/RSA-cryptosystem#readme
-bug-reports:    https://github.com/githubuser/RSA-cryptosystem/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2023 Author name here
-license:        BSD-3-Clause
+author:         Arnecke, Möhle
 license-file:   LICENSE
 build-type:     Simple
-extra-source-files:
-    README.md
-    CHANGELOG.md
 
 source-repository head
   type: git
-  location: https://github.com/githubuser/RSA-cryptosystem
+  location: https://github.com/ImPunktFinn/RSA-cryptosystem
 
-library
-  exposed-modules:
-      Lib
-  other-modules:
-      Paths_RSA_cryptosystem
-  autogen-modules:
-      Paths_RSA_cryptosystem
-  hs-source-dirs:
-      src
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
-  build-depends:
-      base >=4.7 && <5
-  default-language: Haskell2010
-
-executable RSA-cryptosystem-exe
-  main-is: Main.hs
-  other-modules:
-      Paths_RSA_cryptosystem
-  autogen-modules:
-      Paths_RSA_cryptosystem
-  hs-source-dirs:
-      app
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
-  build-depends:
-      RSA-cryptosystem
-    , base >=4.7 && <5
-  default-language: Haskell2010
-
-test-suite RSA-cryptosystem-test
-  type: exitcode-stdio-1.0
-  main-is: Spec.hs
-  other-modules:
-      Paths_RSA_cryptosystem
-  autogen-modules:
-      Paths_RSA_cryptosystem
-  hs-source-dirs:
-      test
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
-  build-depends:
-      RSA-cryptosystem
-    , base >=4.7 && <5
+executable RSA_cryptosystem-exe
+  main-is:          Main.hs
+  other-modules:    Math
+  build-depends:    base >=4.7 && <5
   default-language: Haskell2010
