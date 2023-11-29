@@ -1,7 +1,7 @@
 module Main where
 
 import Math
-import Numeric (showHex)
+import Encryption
 
 main :: IO()
 main = do
@@ -14,5 +14,8 @@ main = do
   let pubKey = (e, n)
   let privKey = (invE, n)
 
+  
+
   print pubKey
   print privKey
+  print $ stringToHex "password"

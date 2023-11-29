@@ -2,7 +2,7 @@ module Math
  (phi, mulInverse)
  where
 
--- bestimmt phi, welches die modulo-Umgebung beschreibt
+-- berechnet Φ(N) auf der Grundlage, dass p und q Primzahlen sind
 phi :: Int -> Int -> Int
 phi p q = (p-1) * (q-1)
 
@@ -19,7 +19,3 @@ erwEuklAlgo a b
         where aNew = snd temp
               bNew = fst temp - div a b * snd temp
               temp = erwEuklAlgo b (mod a b)
-
--- verschlüsselt einen Char mithilfe des pubKeys
-encrypt :: (Int, Int) -> String -> Int
-encrypt (a, b) m = mod (m ** a)
