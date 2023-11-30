@@ -2,6 +2,7 @@ module Main where
 
 import Math
 import Transcoding
+import Cryptography
 
 main :: IO()
 main = do
@@ -24,3 +25,6 @@ main = do
 
   output <- encode "f" keyLength
   print output
+  
+  let intPrim = octetStreamToIntPrimitive output
+  print intPrim

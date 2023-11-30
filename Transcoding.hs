@@ -2,12 +2,17 @@ module Transcoding where
 
 import Control.Monad (replicateM)
 import Math
-import Numeric (showHex)
+import Numeric (showHex, readHex)
 import Data.Char (ord)
 
 -- wandelt eine Dezimalzahl in eine Hexadezimalzahl um (Rückgabe als String)
 decToHex :: (Show a, Integral a) => a -> String
-decToHex x = showHex x ""
+decToHex dec = showHex dec ""
+
+hexToDec :: (Integral a) => String -> a
+hexToDec hex = case readHex hex of
+               (dec, _):_ -> dec
+               _          -> error "Invalid hex"
 
 -- konvertiert jeden Buchstaben eines gegebenen Strings in den zugehörigen hexadezimalen ASCII-Wert
 -- map wendet auf jedes Zeichen des Strings die verkettete Funktion aus ord (Zeichen in dezimal ASCII) und decToHex an

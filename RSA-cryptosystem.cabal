@@ -13,7 +13,7 @@ source-repository head
 executable RSA_cryptosystem-exe
   main-is:          Main.hs
   other-modules:    Math
-                    Encryption
+                    Cryptography
                     Transcoding
   build-depends:    base >=4.7 && <5,
                     random
