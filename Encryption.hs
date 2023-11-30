@@ -2,6 +2,8 @@ module Encryption where
 
 import Numeric (showHex)
 import Data.Char (ord)
+import Control.Monad (replicateM)
+import Math
 
 -- wandelt eine Dezimalzahl in eine Hexadezimalzahl um (Rückgabe als String)
 decToHex :: (Show a, Integral a) => a -> String
@@ -13,5 +15,11 @@ decToHex x = showHex x ""
 stringToHexValues :: String -> [String]
 stringToHexValues = map (decToHex . ord)
 
-calcKeyLength :: (Int, Int) -> Int
-calcKeyLength (_, n) = floor $ logBase 2 (fromIntegral n :: Double) + 1
+encode :: String -> Int -> Int
+encode s keyLength = keyLength
+
+addPadding :: [String] -> Int -> IO [String]
+addPadding s keyLength = do
+  let paddingLength = div keyLength 16 - length s - 2
+  randomIntegers <- replicateM paddingLength (randomInt(1, 254))
+  return $ "02" : map decToHex randomIntegers ++ ["ff"] ++ s

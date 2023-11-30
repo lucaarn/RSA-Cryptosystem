@@ -5,8 +5,8 @@ import Encryption
 
 main :: IO()
 main = do
-  let p = 11
-  let q = 13
+  let p = 999999999959
+  let q = 999999999989
   let n = p * q
   let phiN = phi p q
   let e = 65537
@@ -17,5 +17,10 @@ main = do
   print pubKey
   print privKey
 
-  print $ stringToHexValues "helloworld"
-  print $ calcKeyLength pubKey
+  let keyLength = calcKeyLength pubKey
+  print keyLength
+  let hexString = stringToHexValues "f"
+  print hexString
+  
+  output <- addPadding hexString keyLength
+  print output

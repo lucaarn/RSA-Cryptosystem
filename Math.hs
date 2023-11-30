@@ -1,6 +1,6 @@
-module Math
- (phi, mulInverse)
- where
+module Math where
+
+import System.Random (randomRIO)
 
 -- berechnet Φ(N) auf der Grundlage, dass p und q Primzahlen sind
 phi :: Int -> Int -> Int
@@ -19,3 +19,9 @@ erwEuklAlgo a b
         where aNew = snd temp
               bNew = fst temp - div a b * snd temp
               temp = erwEuklAlgo b (mod a b)
+
+calcKeyLength :: (Int, Int) -> Int
+calcKeyLength (_, n) = floor $ logBase 2 (fromIntegral n :: Double) + 1
+
+randomInt :: (Int, Int) -> IO Int
+randomInt (min, max) = randomRIO(min, max)
