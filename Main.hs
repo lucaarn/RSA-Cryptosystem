@@ -14,8 +14,8 @@ main = do
   let pubKey = (e, n)
   let privKey = (invE, n)
 
-  
-
   print pubKey
   print privKey
-  print $ stringToHex "password"
+
+  print $ stringToHexValues "helloworld"
+  print $ calcKeyLength pubKey
