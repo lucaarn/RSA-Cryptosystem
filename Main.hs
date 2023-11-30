@@ -1,7 +1,7 @@
 module Main where
 
 import Math
-import Encryption
+import Transcoding
 
 main :: IO()
 main = do
@@ -21,6 +21,6 @@ main = do
   print keyLength
   let hexString = stringToHexValues "f"
   print hexString
-  
-  output <- addPadding hexString keyLength
+
+  output <- encode "f" keyLength
   print output
