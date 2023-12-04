@@ -21,3 +21,6 @@ main = do
 
   encryptionOutput <- encrypt "helloworld" pub1
   print encryptionOutput
+  
+  decryptionOutput <- decrypt priv1 encryptionOutput
+  print decryptionOutput
