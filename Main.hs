@@ -16,7 +16,7 @@ main = do
 
   let keyLength = calcKeyLength pub1
   print keyLength
-  let hexString = stringToHexValues "f"
+  let hexString = stringToOctetStream "f"
   print hexString
 
   output <- encode "f" keyLength
@@ -24,6 +24,9 @@ main = do
   
   let intPrim = octetStreamToIntPrimitive output
   print intPrim
-  
+
   let rsaPrim = rsaEncryptionPrimitive pub1 intPrim
   print rsaPrim
+  
+  let octetStr = intToOctetStreamPrimitive rsaPrim
+  print octetStr

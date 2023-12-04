@@ -17,13 +17,18 @@ hexToDec hex = case readHex hex of
 -- konvertiert jeden Buchstaben eines gegebenen Strings in den zugehörigen hexadezimalen ASCII-Wert
 -- map wendet auf jedes Zeichen des Strings die verkettete Funktion aus ord (Zeichen in dezimal ASCII) und decToHex an
 -- Rückgabe als Array der ASCII-Werte
-stringToHexValues :: String -> [String]
-stringToHexValues = map (decToHex . ord)
+stringToOctetStream :: String -> [String]
+stringToOctetStream = map (decToHex . ord)
+
+split :: Int -> String -> [String]
+split n str = case splitAt n str of
+              (a, b) | null a    -> []
+                     | otherwise -> a : split n b
 
 encode :: String -> Int -> IO [String]
 encode m keyLength = do
   paddingString <- generatePaddingString keyLength (length m)
-  let message = stringToHexValues m
+  let message = stringToOctetStream m
   return $ ["00", "02"] ++ paddingString ++ ["00"] ++ message
 
 generatePaddingString :: Int -> Int -> IO [String]
