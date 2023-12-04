@@ -19,14 +19,5 @@ main = do
   let hexString = stringToOctetStream "f"
   print hexString
 
-  output <- encode "f" keyLength
-  print output
-  
-  let intPrim = octetStreamToIntPrimitive output
-  print intPrim
-
-  let rsaPrim = rsaEncryptionPrimitive pub1 intPrim
-  print rsaPrim
-  
-  let octetStr = intToOctetStreamPrimitive rsaPrim
-  print octetStr
+  encryptionOutput <- encrypt "helloworld" pub1
+  print encryptionOutput
