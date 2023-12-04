@@ -3,22 +3,18 @@ module Main where
 import Math
 import Transcoding
 import Cryptography
+import Key
+
+alice :: IO (Key, Key)
+alice = getKeyPair 1024
 
 main :: IO()
 main = do
-  let p = 999999999959
-  let q = 999999999989
-  let n = p * q
-  let phiN = phi p q
-  let e = 65537
-  let invE = mulInverse e phiN
-  let pubKey = (e, n)
-  let privKey = (invE, n)
+  keyPair1 <- alice
+  
+  let (pub1, priv1) = keyPair1
 
-  print pubKey
-  print privKey
-
-  let keyLength = calcKeyLength pubKey
+  let keyLength = calcKeyLength pub1
   print keyLength
   let hexString = stringToHexValues "f"
   print hexString
