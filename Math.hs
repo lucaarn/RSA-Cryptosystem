@@ -22,3 +22,11 @@ extEucAlgo a b
 
 randomInt :: (Int, Int) -> IO Int
 randomInt (min, max) = randomRIO(min, max)
+
+modExp :: Integral a => a -> a -> a -> a -> a
+modExp n e m x | e <= 0    = x
+               | otherwise = modExp n eNew mNew xNew
+                 where eNew = div e 2
+                       mNew = mod (m * m) n
+                       xNew | mod e 2 == 1 = mod (m * x) n
+                            | otherwise    = x
