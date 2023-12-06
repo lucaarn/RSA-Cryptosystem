@@ -49,7 +49,14 @@ encode m keyLength = do
 -- der Integer wird mittels ASCII-Werten in einen String umgewandelt
 decode :: [String] -> IO String
 decode em = do
-  let mes = (drop 1 . dropWhile (/= "00") . drop 2) em
-  let decMes = map hexToDec mes
-  let ascii = map (chr . fromIntegral) decMes
-  return ascii
+  if head em /= "00" && em!!1 /= "02"
+    then error "decryption error"
+    else do
+      let mesTemp = drop 2 em
+      if length (takeWhile (/= "00") mesTemp) < 8
+        then error "decryption error"
+        else do
+          let mes = (drop 1 . dropWhile (/= "00")) mesTemp
+          let decMes = map hexToDec mes
+          let ascii = map (chr . fromIntegral) decMes
+          return ascii
