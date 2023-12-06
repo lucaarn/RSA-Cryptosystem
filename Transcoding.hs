@@ -11,7 +11,7 @@ decToHex :: (Show a, Integral a) => a -> String
 decToHex dec = do
   let hex = showHex dec ""
   if length hex == 1 then "0" ++ hex else hex
-  
+
 hexToDec :: (Integral a) => String -> a
 hexToDec hex = case readHex hex of
                (dec, _):_ -> dec
@@ -23,23 +23,31 @@ hexToDec hex = case readHex hex of
 stringToOctetStream :: String -> [String]
 stringToOctetStream = map (decToHex . ord)
 
+-- Ein String wird in ein Array aus n-langen Strings gesplittet
 split :: Int -> String -> [String]
 split n str = case splitAt n str of
               (a, b) | null a    -> []
                      | otherwise -> a : split n b
 
+-- Generiert einen PaddingString, der dafür sorgt, dass nicht erkennbar ist, wie lang das eigentliche Wort ist
 generatePaddingString :: Int -> Int -> IO [String]
 generatePaddingString k mLen = do
   let paddingLength = div k 8 - mLen - 3
   randomIntegers <- replicateM paddingLength (randomInt(1, 254))
   return $ map decToHex randomIntegers
 
+-- Wandelt ein Wort in einen verschlüsseltes HexArray um
+-- In das verschlüsselte HexArray wird bereits ein PaddingString eingebunden
 encode :: String -> Int -> IO [String]
 encode m keyLength = do
   paddingString <- generatePaddingString keyLength (length m)
   let message = stringToOctetStream m
   return $ ["00", "02"] ++ paddingString ++ ["00"] ++ message
 
+-- Wandelt ein veschlüsseltes HexArray in einen entschlüsselten StringText um
+-- zuerst wird dabei der Paddingteil entfernt
+-- Anschließend wird der HexString zu einem Integer
+-- der Integer wird mittels ASCII-Werten in einen String umgewandelt
 decode :: [String] -> IO String
 decode em = do
   let mes = (drop 1 . dropWhile (/= "00") . drop 2) em
