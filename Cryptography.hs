@@ -11,8 +11,8 @@ octetStreamToIntPrimitive octStr = hexToDec (concat octStr)
 -- wandelt einen Integer-Wert in ein Array aus 8-Bit Hex-Strings um
 intToOctetStreamPrimitive :: Integer -> Int -> Int -> [String]
 intToOctetStreamPrimitive intMes len mode | intMes >= 256^len = error "integer too large"
-                                          | mode == 0 = split 2 (decToHex intMes)
-                                          | otherwise = split 2 ("000" ++ decToHex intMes)
+                                          | mode == 0         = split 2 (decToHex intMes)
+                                          | otherwise         = split 2 ("000" ++ decToHex intMes)
 
 -- führt mathematische Operation zur Verschlüsselung durch
 rsaEncryptionPrimitive :: Key -> Integer -> Integer
@@ -37,10 +37,25 @@ encrypt str (Public n e) = do
   if length str > div keyLength 8 - 11
     then error "message too long"
     else do
+      putStrLn "\n\n Beginn Verschlüsselung"
+
       em <- encode str keyLength
+      putStrLn "Wort als Hex-String mit Padding"
+      print em
+
       let m = octetStreamToIntPrimitive em
+      putStrLn "\nHex-String als Dezimalzahl"
+      print m
+
       let c = rsaEncryptionPrimitive (Public n e) m
-      return $ intToOctetStreamPrimitive c (div keyLength 8) 0
+      putStrLn "\nVerschlüsseltes Wort als Dezimalzahl"
+      print c
+
+      let output = intToOctetStreamPrimitive c (div keyLength 8) 0
+      putStrLn "\nVerschlüsseltes Wort als Hex-String"
+      print output
+
+      return output
 encrypt _ (Private _ _) = error "use public key"
 
 -- Entschlüsselung eines Hex-String Arrays mithilfe des Private Keys:
@@ -54,8 +69,21 @@ decrypt (Private n d) octetStr = do
   if length octetStr /= div keyLength 8
     then error "decryption error"
     else do
+      putStrLn "\n\n Beginn Entschlüsselung"
+
       let c = octetStreamToIntPrimitive octetStr
+      putStrLn "Verschlüsseltes Wort als Dezimalzahl"
+      print c
+
       let m = rsaDecryptionPrimitive (Private n d) c
+      putStrLn "\nEntschlüsseltes Wort als Dezimalzahl"
+      print m
+
       let em = intToOctetStreamPrimitive m (div keyLength 8) 1
+      putStrLn "\nEntschlüssteltes Wort als Hex-String mit Padding"
+      print em
+
+      putStrLn "\nEntschlüsseltes Wort"
       decode em
+
 decrypt (Public _ _) _ = error "use private key"

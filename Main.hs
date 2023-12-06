@@ -11,10 +11,12 @@ alice = getKeyPair 1024
 main :: IO()
 main = do
   keyPair1 <- alice
+  let (pub, priv) = keyPair1
 
-  let (pub1, priv1) = keyPair1
+  putStrLn "Zu verschlüsselndes Wort: (ASCII-Zeichen only)"
+  word <- getLine
 
-  encryptionOutput <- encrypt "Hallo, ich bin Luca" pub1
+  encryptionOutput <- encrypt word pub
   
-  decryptionOutput <- decrypt priv1 encryptionOutput
+  decryptionOutput <- decrypt priv encryptionOutput
   print decryptionOutput
