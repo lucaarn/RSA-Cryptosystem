@@ -51,7 +51,7 @@ encode m keyLength mode = do
 -- der Integer wird mittels ASCII-Werten in einen String umgewandelt
 decode :: [String] -> IO String
 decode em = do
-  if head em /= "00" && em!!1 /= "02"
+  if head em /= "00" || em!!1 /= "02"
     then error "decryption error"
     else do
       let mesTemp = drop 2 em
