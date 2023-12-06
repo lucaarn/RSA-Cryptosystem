@@ -4,7 +4,6 @@ import Control.Monad (replicateM)
 import Math
 import Numeric (showHex, readHex)
 import Data.Char (ord, chr)
-import Data.List (elemIndex)
 
 -- wandelt eine Dezimalzahl in eine Hexadezimalzahl um (Rückgabe als String)
 decToHex :: (Show a, Integral a) => a -> String

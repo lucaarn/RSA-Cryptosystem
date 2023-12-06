@@ -16,6 +16,7 @@ executable RSA_cryptosystem-exe
                     Cryptography
                     Transcoding
                     Key
+                    MillerRabin
   build-depends:    base >=4.7 && <5,
                     random
   default-language: Haskell2010
