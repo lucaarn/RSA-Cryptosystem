@@ -4,6 +4,7 @@ import Math
 import Transcoding
 import Cryptography
 import Key
+import Signature
 
 alice :: IO (Key, Key)
 alice = getKeyPair 1024
@@ -20,3 +21,8 @@ main = do
   
   decryptionOutput <- decrypt priv encryptionOutput
   print decryptionOutput
+
+  signed <- sign "hello" priv
+  
+  output <- verify pub "hello" signed
+  print output

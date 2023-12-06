@@ -39,7 +39,7 @@ encrypt str (Public n e) = do
     else do
       putStrLn "\n\n Beginn Verschlüsselung"
 
-      em <- encode str keyLength
+      em <- encode str keyLength 0
       putStrLn "Wort als Hex-String mit Padding"
       print em
 

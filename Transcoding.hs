@@ -37,11 +37,13 @@ generatePaddingString k mLen = do
 
 -- Wandelt ein Wort in einen verschlüsseltes HexArray um
 -- In das verschlüsselte HexArray wird bereits ein PaddingString eingebunden
-encode :: String -> Int -> IO [String]
-encode m keyLength = do
+encode :: String -> Int -> Int -> IO [String]
+encode m keyLength mode = do
   paddingString <- generatePaddingString keyLength (length m)
   let message = stringToOctetStream m
-  return $ ["00", "02"] ++ paddingString ++ ["00"] ++ message
+  if mode == 0
+    then return $ ["00", "02"] ++ paddingString ++ ["00"] ++ message
+    else return $ ["00", "01"] ++ paddingString ++ ["00"] ++ message
 
 -- Wandelt ein veschlüsseltes HexArray in einen entschlüsselten StringText um
 -- zuerst wird dabei der Paddingteil entfernt
