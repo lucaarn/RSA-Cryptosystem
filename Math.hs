@@ -47,7 +47,7 @@ isPrime x = do
 -- n ist dabei die Länge des Schlüssels in Bits (standardmäßig 1024)
 randomPrime :: Int -> IO Integer
 randomPrime keyLengthBits = do
-  let minVal = 2^(keyLengthBits - 1)
+  let minVal = ceiling $ sqrt 2 * 2^(keyLengthBits - 1)
   let maxVal = 2^keyLengthBits - 1
   num <- randomRIO(minVal, maxVal)
   isNumPrime <- isPrime num

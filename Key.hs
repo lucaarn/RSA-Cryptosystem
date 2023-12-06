@@ -30,3 +30,4 @@ getKeyPair keyLength = do
 --bestimmt die Bitlänge eines Schlüssels
 calcKeyLength :: Key -> Int
 calcKeyLength (Public n _) = floor $ logBase 2 (fromIntegral n :: Double) + 1
+calcKeyLength (Private n _) = floor $ logBase 2 (fromIntegral n :: Double) + 1

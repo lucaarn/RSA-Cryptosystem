@@ -13,6 +13,8 @@ main = do
   keyPair1 <- alice
 
   let (pub1, priv1) = keyPair1
+  print $ calcKeyLength pub1
+  print $ calcKeyLength priv1
 
   encryptionOutput <- encrypt "Hallo, ich bin Luca" pub1
   
