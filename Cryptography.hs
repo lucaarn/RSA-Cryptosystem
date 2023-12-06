@@ -8,7 +8,7 @@ octetStreamToIntPrimitive :: [String] -> Integer
 octetStreamToIntPrimitive octStr = hexToDec (concat octStr)
 
 intToOctetStreamPrimitive :: Integer -> [String]
-intToOctetStreamPrimitive intMes = split 2 (decToHex intMes)
+intToOctetStreamPrimitive intMes = split 2 ("000" ++ decToHex intMes)
 
 rsaEncryptionPrimitive :: Key -> Integer -> Integer
 rsaEncryptionPrimitive (Public n e) m = modExp n e m 1

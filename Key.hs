@@ -4,6 +4,7 @@ import Math
 
 data Key = Public {n :: Integer, e :: Integer}
          | Private {n :: Integer, d :: Integer}
+     deriving Show
 
 getPublicExponent :: Integer
 getPublicExponent = 65537
@@ -20,8 +21,8 @@ getKeyPair keyLength = do
   let keyLengthBits = div keyLength 2
   let p = 11259212850837339544665486601151895674218087499936576568948099017161149758785249146521965787431768878642480241801108694817806793678118718163058968771837853
   let q = 10158157686711727104043556458760215488498836845270304181991884234457355206194067694826191348302641023903724387445565873484037690377184734712923316357641803
-  let (e, d, n) = getKeyComponents p q
-  return (Public {e = e, n = n}, Private {d = d , n = n})
+  let (n, e, d) = getKeyComponents p q
+  return (Public {n = n, e = e}, Private {n = n , d = d})
 
 calcKeyLength :: Key -> Int
-calcKeyLength (Public _ e) = floor $ logBase 2 (fromIntegral e :: Double) + 1
+calcKeyLength (Public n _) = floor $ logBase 2 (fromIntegral n :: Double) + 1

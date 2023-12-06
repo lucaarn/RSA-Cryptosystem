@@ -8,8 +8,10 @@ import Data.List (elemIndex)
 
 -- wandelt eine Dezimalzahl in eine Hexadezimalzahl um (Rückgabe als String)
 decToHex :: (Show a, Integral a) => a -> String
-decToHex dec = showHex dec ""
-
+decToHex dec = do
+  let hex = showHex dec ""
+  if length hex == 1 then "0" ++ hex else hex
+  
 hexToDec :: (Integral a) => String -> a
 hexToDec hex = case readHex hex of
                (dec, _):_ -> dec
@@ -40,7 +42,7 @@ encode m keyLength = do
 
 decode :: [String] -> IO String
 decode em = do
-  let mes = (dropWhile (== "00") . drop 2) em
+  let mes = (drop 1 . dropWhile (/= "00") . drop 2) em
   let decMes = map hexToDec mes
   let ascii = map (chr . fromIntegral) decMes
   return ascii

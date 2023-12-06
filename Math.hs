@@ -29,4 +29,4 @@ modExp n e m x | e <= 0    = x
                where eNew = div e 2
                      mNew = mod (m * m) n
                      xNew | mod e 2 == 1 = mod (m * x) n
-                          | otherwise    = x
+                          | otherwise    = x 

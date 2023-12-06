@@ -14,13 +14,7 @@ main = do
 
   let (pub1, priv1) = keyPair1
 
-  let keyLength = calcKeyLength pub1
-  print keyLength
-  let hexString = stringToOctetStream "f"
-  print hexString
-
-  encryptionOutput <- encrypt "helloworld" pub1
-  print encryptionOutput
+  encryptionOutput <- encrypt "Hallo, ich bin Luca" pub1
   
   decryptionOutput <- decrypt priv1 encryptionOutput
   print decryptionOutput
