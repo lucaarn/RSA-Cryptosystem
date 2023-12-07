@@ -84,6 +84,8 @@ decrypt (Private n d) octetStr = do
       print em
 
       putStrLn "\nEntschlüsseltes Wort"
-      decode em
-
+      let output = decode em
+      case output of
+        Left ex -> error "encryption error"
+        Right val -> return val
 decrypt (Public _ _) _ = error "use private key"

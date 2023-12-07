@@ -2,6 +2,7 @@ module Key where
 
 import Math
 
+-- Datentyp Key, entweder bestehend aus RSA modulus n und public Exponent e oder modulus n und private Exponent d
 data Key = Public {n :: Integer, e :: Integer}
          | Private {n :: Integer, d :: Integer}
      deriving Show

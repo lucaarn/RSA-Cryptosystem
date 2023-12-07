@@ -41,7 +41,7 @@ isPrime x = do
   let randomInts = replicate 5 (randomRIO (2, x - 1))
   witnesses <- sequence randomInts
   let result = map (millerRabinPrimality x) witnesses
-  return $ all (== True) result
+  return $ and result
 
 -- gibt eine zufällige Primzahl zurück, welche genau n Bits zur Darstellung benötigt
 -- n ist dabei die Länge des Schlüssels in Bits (standardmäßig 1024)

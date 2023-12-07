@@ -9,20 +9,26 @@ import Signature
 alice :: IO (Key, Key)
 alice = getKeyPair 1024
 
+bob :: IO (Key, Key)
+bob = getKeyPair 1024
+
 main :: IO()
 main = do
-  keyPair1 <- alice
-  let (pub, priv) = keyPair1
+  aliceKeyPair <- alice
+  bobKeyPair <- bob
+
+  let (aPub, aPriv) = aliceKeyPair
+  let (bPub, bPriv) = bobKeyPair
 
   putStrLn "Zu verschlüsselndes Wort: (ASCII-Zeichen only)"
   word <- getLine
 
-  encryptionOutput <- encrypt word pub
+  encryptionOutput <- encrypt word aPub
   
-  decryptionOutput <- decrypt priv encryptionOutput
+  decryptionOutput <- decrypt aPriv encryptionOutput
   print decryptionOutput
 
-  signed <- sign "hello" priv
+  signed <- sign word bPriv
   
-  output <- verify pub "hello" signed
+  output <- verify bPub word signed
   print output

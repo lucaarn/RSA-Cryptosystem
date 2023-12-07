@@ -4,6 +4,7 @@ import Control.Monad (replicateM)
 import Math
 import Numeric (showHex, readHex)
 import Data.Char (ord, chr)
+import Control.Exception (SomeException)
 
 -- wandelt eine Dezimalzahl in eine Hexadezimalzahl um (Rückgabe als String)
 decToHex :: (Show a, Integral a) => a -> String
@@ -11,6 +12,7 @@ decToHex dec = do
   let hex = showHex dec ""
   if length hex == 1 then "0" ++ hex else hex
 
+-- wandelt Hexadezimalzahl (String) in Dezimalzahl um
 hexToDec :: (Integral a) => String -> a
 hexToDec hex = case readHex hex of
                (dec, _):_ -> dec
@@ -54,16 +56,16 @@ encode m keyLength mode = do
 -- zuerst wird dabei der Paddingteil entfernt
 -- Anschließend wird der HexString zu einem Integer
 -- der Integer wird mittels ASCII-Werten in einen String umgewandelt
-decode :: [String] -> IO String
+decode :: [String] -> Either SomeException String
 decode em = do
-  if head em /= "00" || em!!1 /= "02"
-    then error "decryption error"
-    else do
+  if head em == "00" && (em!!1 == "02" || em!!1 == "01")
+    then do
       let mesTemp = drop 2 em
       if length (takeWhile (/= "00") mesTemp) < 8
-        then error "decryption error"
+        then Left $ error "encoding error"
         else do
           let mes = (drop 1 . dropWhile (/= "00")) mesTemp
           let decMes = map hexToDec mes
           let ascii = map (chr . fromIntegral) decMes
-          return ascii
+          Right ascii
+    else error "encoding error"
