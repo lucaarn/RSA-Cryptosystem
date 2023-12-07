@@ -29,17 +29,22 @@ split n str = case splitAt n str of
                      | otherwise -> a : split n b
 
 -- Generiert einen PaddingString, der dafür sorgt, dass nicht erkennbar ist, wie lang das eigentliche Wort ist
-generatePaddingString :: Int -> Int -> IO [String]
-generatePaddingString k mLen = do
+generatePaddingString :: Int -> Int -> Int -> IO [String]
+generatePaddingString k mLen mode = do
   let paddingLength = div k 8 - mLen - 3
-  randomIntegers <- replicateM paddingLength (randomInt(1, 254))
-  return $ map decToHex randomIntegers
+  if mode == 0
+    then do
+      randomIntegers <- replicateM paddingLength (randomInt(1, 254))
+      return $ map decToHex randomIntegers
+    else
+      return $ replicate paddingLength "FF"
 
 -- Wandelt ein Wort in einen verschlüsseltes HexArray um
 -- In das verschlüsselte HexArray wird bereits ein PaddingString eingebunden
+-- Decryption encoding, wenn mode 0, sonst Signature encoding
 encode :: String -> Int -> Int -> IO [String]
 encode m keyLength mode = do
-  paddingString <- generatePaddingString keyLength (length m)
+  paddingString <- generatePaddingString keyLength (length m) mode
   let message = stringToOctetStream m
   if mode == 0
     then return $ ["00", "02"] ++ paddingString ++ ["00"] ++ message
