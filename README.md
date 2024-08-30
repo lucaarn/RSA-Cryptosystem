@@ -28,7 +28,7 @@ This implementation, like many RSA examples on the internet, is not intended for
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/YourGitHubUsername/RSA-cryptosystem.git
+   git clone https://github.com/lucaarn/RSA-cryptosystem.git
    ```
 
 2. **Build the Project:**
